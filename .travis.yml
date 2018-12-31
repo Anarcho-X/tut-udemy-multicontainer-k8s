@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t sabri/tut-udemy-multicontainer -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run sabri/tut-udemy-multicontainer npm test -- --coverage
+
+after_success:
+  - docker build -t sabri/tut-udemy-multicontainer-client ./client
+  - docker build -t sabri/tut-udemy-multicontainer-nginx ./nginx
+  - docker build -t sabri/tut-udemy-multicontainer-server ./server
+  - docker build -t sabri/tut-udemy-multicontainer-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
+  # Take these images and push them to docker hub
+  - docker push sabri/tut-udemy-multicontainer-client
+  - docker push sabri/tut-udemy-multicontainer-nginx
+  - docker push sabri/tut-udemy-multicontainer-server
+  - docker push sabri/tut-udemy-multicontainer-worker
