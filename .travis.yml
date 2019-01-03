@@ -20,3 +20,16 @@ after_success:
   - docker push spiraltrip/tut-udemy-multicontainer-nginx
   - docker push spiraltrip/tut-udemy-multicontainer-server
   - docker push spiraltrip/tut-udemy-multicontainer-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "tut-udemy-multicontainer"
+  env: "TutUdemyMulticontainer-env"
+  bucket_name: "elasticbeanstalk-us-east-1-373503941642"
+  bucket_path: "tut-udemy-multicontainer"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"

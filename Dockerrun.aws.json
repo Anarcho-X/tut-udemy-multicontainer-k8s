@@ -1,0 +1,36 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"containerDefinitions": [
+		{
+			"name": "client",
+			"image": "spiraltrip/tut-udemy-multicontainer-client",
+			"hostname": "client",
+			"essential": false
+		},
+		{
+			"name": "server",
+			"image": "spiraltrip/tut-udemy-multicontainer-server",
+			"hostname": "api",
+			"essetial": false
+		},
+		{
+			"name": "worker",
+			"image": "spiraltrip/tut-udemy-multicontainer-worker",
+			"hostname": "worker",
+			"essential": false
+		},
+		{
+			"name": "nginx",
+			"image": "spiraltrip/tut-udemy-multicontainer-nginx",
+			"hostname": "nginx",
+			"essential": true,
+			"portMappings": [
+				{
+					"hostPort": 80,
+					"containerPort": 80
+				}
+			],
+			"links": ["client", "server"]
+		}
+	]
+}
