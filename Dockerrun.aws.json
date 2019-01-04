@@ -12,7 +12,7 @@
 			"name": "server",
 			"image": "spiraltrip/tut-udemy-multicontainer-server",
 			"hostname": "api",
-			"essetial": false,
+			"essential": false,
 			"memory": 128
 		},
 		{
