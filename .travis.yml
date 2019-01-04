@@ -1,34 +1,34 @@
 sudo: required
 services:
-  - docker
+    - docker
 
 before_install:
-  - docker build -t spiraltrip/tut-udemy-multicontainer -f ./client/Dockerfile.dev ./client
+    - docker build -t spiraltrip/tut-udemy-multicontainer -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run spiraltrip/tut-udemy-multicontainer npm test -- --coverage
+    - docker run spiraltrip/tut-udemy-multicontainer npm test -- --coverage
 
 after_success:
-  - docker build -t spiraltrip/tut-udemy-multicontainer-client ./client
-  - docker build -t spiraltrip/tut-udemy-multicontainer-nginx ./nginx
-  - docker build -t spiraltrip/tut-udemy-multicontainer-server ./server
-  - docker build -t spiraltrip/tut-udemy-multicontainer-worker ./worker
-  # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
-  # Take these images and push them to docker hub
-  - docker push spiraltrip/tut-udemy-multicontainer-client
-  - docker push spiraltrip/tut-udemy-multicontainer-nginx
-  - docker push spiraltrip/tut-udemy-multicontainer-server
-  - docker push spiraltrip/tut-udemy-multicontainer-worker
+    - docker build -t spiraltrip/tut-udemy-multicontainer-client ./client
+    - docker build -t spiraltrip/tut-udemy-multicontainer-nginx ./nginx
+    - docker build -t spiraltrip/tut-udemy-multicontainer-server ./server
+    - docker build -t spiraltrip/tut-udemy-multicontainer-worker ./worker
+    # Log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Take these images and push them to docker hub
+    - docker push spiraltrip/tut-udemy-multicontainer-client
+    - docker push spiraltrip/tut-udemy-multicontainer-nginx
+    - docker push spiraltrip/tut-udemy-multicontainer-server
+    - docker push spiraltrip/tut-udemy-multicontainer-worker
 
 deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "tut-udemy-multicontainer"
-  env: "TutUdemyMulticontainer-env"
-  bucket_name: "elasticbeanstalk-us-east-1-373503941642"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
+    provider: elasticbeanstalk
+    region: 'us-east-1'
+    app: 'tut-udemy-multicontainer'
+    env: 'TutUdemyMulticontainer-env'
+    bucket_name: 'elasticbeanstalk-us-east-1-373503941642'
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: $AWS_SECRET_KEY
