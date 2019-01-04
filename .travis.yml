@@ -23,13 +23,13 @@ after_success:
 
 deploy:
     provider: elasticbeanstalk
-    region: us-east-1
-    app: tut-udemy-multicontainer
-    env: TutUdemyMulticontainer-env
-    bucket_name: elasticbeanstalk-us-east-1-373503941642
-    bucket_path: tut-udemy-multicontainer-bucket
+    region: "us-east-1"
+    app: "tut-udemy-multicontainer"
+    env: "TutUdemyMulticontainer-env-1"
+    bucket_name: "elasticbeanstalk-us-east-1-373503941642"
     on:
         branch: master
-    access_key_id: $AWS_ACCESS_KEY
+    access_key_id:
+        secure: "$AWS_ACCESS_KEY"
     secret_access_key:
-        secure: $AWS_SECRET_KEY
+        secure: "$AWS_SECRET_KEY"
