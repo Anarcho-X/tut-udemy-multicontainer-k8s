@@ -14,7 +14,7 @@ after_success:
     - docker build -t spiraltrip/tut-udemy-multicontainer-server ./server
     - docker build -t spiraltrip/tut-udemy-multicontainer-worker ./worker
     # Log in to the docker CLI
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # Take these images and push them to docker hub
     - docker push spiraltrip/tut-udemy-multicontainer-client
     - docker push spiraltrip/tut-udemy-multicontainer-nginx
